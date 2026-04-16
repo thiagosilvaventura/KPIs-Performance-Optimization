@@ -1,0 +1,104 @@
+
+
+- Columns:
+
+call_id (sequential integer starting at 1)
+agent_id (integer between 1 and 50)
+call_duration (integer, seconds, average around 600, min 60)
+hold_time (integer, seconds, average around 120, min 0)
+csat_score (integer from 1 to 5)
+first_call_res (binary: 1 or 0)
+repeat_call (binary: 1 or 0)
+issue_type (categorical: Billing, Tech, General)
+channel (categorical: Voice, Chat, Email)
+
+Data logic:
+
+- Tech issues should have longer average call_duration
+- If first_call_res = 0, then repeat_call should be more likely (around 70%)
+- If repeat_call = 1, csat_score should decrease
+- If hold_time > 180, csat_score should decrease
+- If call_duration > 900, csat_score should decrease
+- Billing issues should have higher first_call_res rate (~80%)
+- Tech issues should have lower first_call_res rate (~60%)
+
+
+
+__________________________________________________________________________
+Python coding : DB creation
+
+import pandas as pd
+import numpy as np
+
+np.random.seed(42)
+
+n = 5000
+
+# Agents com performance diferente (realismo)
+agents = np.random.randint(1, 50, n)
+
+# Issue types com impacto diferente
+issue_type = np.random.choice(
+    ["Billing", "Tech", "General"],
+    n,
+    p=[0.3, 0.5, 0.2]
+)
+
+# Base durations
+call_duration = np.random.normal(600, 180, n).clip(60)
+hold_time = np.random.normal(120, 60, n).clip(0)
+
+# First Call Resolution depende do tipo de problema
+fcr = [
+    np.random.choice([1, 0], p=[0.8, 0.2]) if i == "Billing"
+    else np.random.choice([1, 0], p=[0.6, 0.4]) if i == "Tech"
+    else np.random.choice([1, 0], p=[0.7, 0.3])
+    for i in issue_type
+]
+
+# Repeat call  FCR
+repeat_call = [
+    0 if f == 1 else np.random.choice([0, 1], p=[0.3, 0.7])
+    for f in fcr
+]
+
+# CSAT
+csat = []
+for i in range(n):
+    score = 5
+    
+    if fcr[i] == 0:
+        score -= 2
+    if repeat_call[i] == 1:
+        score -= 1
+    if hold_time[i] > 180:
+        score -= 1
+    if call_duration[i] > 900:
+        score -= 1
+        
+    score = max(1, min(5, score))
+    csat.append(score)
+
+# Channel
+channel = np.random.choice(
+    ["Voice", "Chat", "Email"],
+    n,
+    p=[0.6, 0.3, 0.1]
+)
+
+data = pd.DataFrame({
+    "call_id": range(1, n+1),
+    "agent_id": agents,
+    "call_duration": call_duration.astype(int),
+    "hold_time": hold_time.astype(int),
+    "csat_score": csat,
+    "first_call_res": fcr,
+    "repeat_call": repeat_call,
+    "issue_type": issue_type,
+    "channel": channel
+})
+
+# save
+data.to_csv("data/calls.csv", index=False)
+
+print("Dataset generated successfully!")
