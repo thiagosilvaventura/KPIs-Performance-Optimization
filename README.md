@@ -77,48 +77,75 @@ This project simulates a real-world call center dataset and applies data science
 └── 📄 requirements.txt
 ```
 
----
 
-## 🛠️ Tech Stack
-
-* 🟢 Python
-* 🔵 Pandas
-* 🟣 NumPy
-* 🟡 Matplotlib / Seaborn
-* 🔴 Scikit-learn
-
----
-
-## 🔘 Quick Actions
+# 📊 KPIs Performance Optimization & Risk Detection
 
 [![Open Notebook](https://img.shields.io/badge/Open-Notebook-orange?style=for-the-badge)](#)
-[![Download Dataset](https://img.shields.io/badge/Download-Data-blue?style=for-the-badge)](#)
-[![View Code](https://img.shields.io/badge/View-Code-black?style=for-the-badge)](#)
+[![Python Version](https://img.shields.io/badge/Python-3.11+-blue?style=for-the-badge)](#)
+[![Status](https://img.shields.io/badge/Status-Operational-green?style=for-the-badge)](#)
 
 ---
 
-## 🌌 Context
+## 🌌 Context & Vision
 
-Call centers are not just operational units — they are living systems.
+Call centers and operational hubs are living systems where every interaction generates a data point. This project is designed to move beyond raw logs, creating a robust Python-based engine to sanitize data and extract actionable insights. 
 
-Every call is a story.
-Every delay, a friction point.
-Every resolved issue, a silent victory.
-
-This project seeks to translate those stories into data —
-and those data into decisions.
+**The goal:** Transform operational "noise" into a clear narrative of system health and risk mitigation.
 
 ---
 
+## 🧠 Analysis & Methodology
 
-## 📊 Visualization
-![Performance Analysis](./performance_analysis.png)
+To ensure the integrity of the results, the engine follows a structured data science pipeline:
 
-
-
-## 📌 Status
-
-🚧 Project in development — analysis and modeling steps will be added progressively.
+* **Data Sanitization**: Handling missing values through median imputation and removing duplicates to prevent statistical bias.
+* **Efficiency Modeling**: Calculating normalized "Efficiency Ratios" (Output/Input) to compare performance across varying volumes.
+* **Anomaly Detection**: Utilizing Z-Score logic to identify performance outliers that deviate from the historical norm.
 
 ---
+
+## 📈 Performance Visualization
+
+Below is the automated output of our analysis. The visualization uses a **Dark Neon** theme for high contrast, specifically designed to highlight operational risks:
+
+<p align="center">
+  <img src="performance_analysis.png" alt="KPI Performance Analysis" width="800">
+</p>
+
+### **Key Insights from the Chart**
+* **Stable Path (Neon Green)**: Points following a linear trend indicate a healthy system where success scales with demand.
+* **Statistical Outlier (Neon Red)**: The isolated red point identifies a critical failure—high volume but drastically low success rate—representing a systemic risk or technical bottleneck.
+
+---
+
+## 🛠️ Technical Stack
+
+* **Engine**: Python 3.x
+* **Data Processing**: `Pandas`, `NumPy`
+* **Visualization**: `Seaborn`, `Matplotlib` (Custom Neon Dark Theme)
+* **Logic**: Modular OOP (`PerformanceAnalyzer` class)
+
+---
+
+## 🚀 How to Run
+
+1.  **Clone the repository**:
+    ```bash
+    git clone [https://github.com/thiagosilvaventura/KPIs-Performance-Optimization.git](https://github.com/thiagosilvaventura/KPIs-Performance-Optimization.git)
+    ```
+2.  **Install dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  **Generate the analysis**:
+    ```bash
+    python kpivisualization.py
+    ```
+
+---
+
+<p align="center">
+  Developed with focus on <b>Risk Management</b> and <b>Operational Excellence</b>.
+</p>
+
 
