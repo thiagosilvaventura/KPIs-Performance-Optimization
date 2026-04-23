@@ -110,6 +110,12 @@ and those data into decisions.
 
 ---
 
+
+## 📊 Visualization
+![Performance Analysis](./performance_analysis.png)
+
+
+
 ## 📌 Status
 
 🚧 Project in development — analysis and modeling steps will be added progressively.
